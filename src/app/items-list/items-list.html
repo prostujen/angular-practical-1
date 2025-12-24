@@ -1,0 +1,12 @@
+<div class="container" style="padding: 20px;">
+  <h2>Список товарів</h2>
+
+  <div class="grid" style="display: flex; gap: 20px; flex-wrap: wrap;">
+    <div *ngFor="let item of products">
+      
+      <app-item-card></app-item-card> 
+      
+      <p>{{ item.title }}</p> 
+    </div>
+  </div>
+</div>
