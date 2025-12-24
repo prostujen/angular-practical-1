@@ -1,0 +1,92 @@
+.form-container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+}
+
+.form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+  }
+
+  input, textarea {
+    width: 100%;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+    box-sizing: border-box;
+
+    &:focus {
+      border-color: #3f51b5;
+      outline: none;
+    }
+  }
+
+  // Стиль для поля з помилкою
+  .ng-invalid.ng-touched {
+    border-color: #e74c3c;
+  }
+}
+
+.error {
+  color: #e74c3c;
+  font-size: 0.85rem;
+  margin-top: 5px;
+}
+
+.actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+
+  button {
+    flex: 1;
+    background: #3f51b5;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background 0.3s;
+
+    &:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+    }
+
+    &:hover:not(:disabled) {
+      background: #303f9f;
+    }
+  }
+
+  .cancel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #777;
+    font-weight: 600;
+    padding: 0 20px;
+    
+    &:hover {
+      color: #333;
+    }
+  }
+}

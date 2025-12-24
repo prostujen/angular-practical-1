@@ -1,28 +1,29 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Тут живе AsyncPipe
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router'; // <--- 1. ПЕРЕВІРТЕ ЦЕЙ ІМПОРТ
+
 import { ItemCardComponent } from '../item-card/item-card';
 import { Product } from '../shared/models/product.model';
 import { DataService } from '../shared/services/data';
-import { Observable } from 'rxjs'; // Нам треба тільки Observable
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-items-list',
   standalone: true,
-  imports: [CommonModule, ItemCardComponent, FormsModule],
+  // 2. ПЕРЕВІРТЕ, ЧИ Є RouterModule У ЦЬОМУ СПИСКУ:
+  imports: [CommonModule, ItemCardComponent, FormsModule, RouterModule], 
   templateUrl: './items-list.html',
   styleUrls: ['./items-list.scss']
 })
 export class ItemsListComponent implements OnInit {
   
-  // Замість масиву products, у нас тепер потік products$ (долар в кінці - це домовленість для Observable)
   products$!: Observable<Product[]>; 
   searchText: string = '';
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    // Ми просто присвоюємо потік, не підписуючись (subscribe не пишемо!)
     this.products$ = this.dataService.getItems();
   }
 

@@ -29,8 +29,23 @@ export class DataService {
     this.productsSubject.next(filtered);
   }
 
-  // Цей метод має бути тут, окремо від filterItems
   getById(id: number): Product | undefined {
     return this.allProducts.find(p => p.id === id);
+  } 
+
+  // Метод додавання
+  addItem(newProduct: Product): void {
+    // 1. Генеруємо ID
+    const maxId = this.allProducts.length > 0 
+      ? Math.max(...this.allProducts.map(p => p.id)) 
+      : 0;
+    newProduct.id = maxId + 1;
+
+    // 2. Додаємо в масив
+    this.allProducts.push(newProduct);
+    
+    // 3. Оновлюємо список для всіх
+    this.productsSubject.next(this.allProducts);
   }
+
 }

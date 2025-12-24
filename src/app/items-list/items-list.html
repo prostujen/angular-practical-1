@@ -1,13 +1,21 @@
 <div class="container" style="padding: 20px;">
   <h2>Каталог товарів</h2>
 
-  <input 
-    type="text" 
-    placeholder="Пошук товарів..." 
-    [(ngModel)]="searchText" 
-    (ngModelChange)="onSearch()" 
-    style="margin-bottom: 20px; padding: 5px; width: 300px;"
-  >
+  <div class="header-actions" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+    
+    <input 
+      type="text" 
+      placeholder="Пошук товарів..." 
+      [(ngModel)]="searchText" 
+      (ngModelChange)="onSearch()" 
+      style="padding: 10px; width: 300px; border-radius: 20px; border: 1px solid #ccc;"
+    >
+
+    <a routerLink="/add-item" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-weight: bold; cursor: pointer;">
+      + Додати товар
+    </a>
+    
+  </div>
 
   <div class="list" style="display: flex; gap: 20px; flex-wrap: wrap;">
     
