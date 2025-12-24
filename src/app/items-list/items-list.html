@@ -4,22 +4,21 @@
   <input 
     type="text" 
     placeholder="Пошук товарів..." 
-    [(ngModel)]="searchText"
+    [(ngModel)]="searchText" 
+    (ngModelChange)="onSearch()" 
     style="margin-bottom: 20px; padding: 5px; width: 300px;"
   >
 
   <div class="list" style="display: flex; gap: 20px; flex-wrap: wrap;">
     
-    <div *ngFor="let product of filteredProducts">
-      
+    <div *ngFor="let product of products">
       <app-item-card 
         [item]="product" 
         (addToCart)="handleCardClick($event)">
       </app-item-card>
-
     </div>
 
-    <p *ngIf="filteredProducts.length === 0">Товарів не знайдено :(</p>
+    <p *ngIf="products.length === 0">Товарів не знайдено :(</p>
 
   </div>
 </div>

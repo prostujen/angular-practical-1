@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core'; // <--- 1. Додали OnInit
+import { Component, OnInit, OnDestroy } from '@angular/core'; // <--- 1. Додали OnDestroy
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ItemCardComponent } from '../item-card/item-card';
 import { Product } from '../shared/models/product.model';
-import { DataService } from '../shared/services/data'; // <--- 2. Імпортували наш сервіс
+import { DataService } from '../shared/services/data'; // Перевірте шлях імпорту
+import { Subscription } from 'rxjs'; // <--- 2. Імпорт для типу підписки
 
 @Component({
   selector: 'app-items-list',
@@ -12,28 +13,37 @@ import { DataService } from '../shared/services/data'; // <--- 2. Імпорту
   templateUrl: './items-list.html',
   styleUrls: ['./items-list.scss']
 })
-// 3. Додали implements OnInit
-export class ItemsListComponent implements OnInit {
+export class ItemsListComponent implements OnInit, OnDestroy {
   
+  products: Product[] = [];
   searchText: string = '';
-  products: Product[] = []; 
+  
+  // Змінна для зберігання підписки, щоб потім відписатися
+  private subscription!: Subscription;
 
   constructor(private dataService: DataService) {}
 
-  // 5. Цей метод запускається автоматично при старті компонента
   ngOnInit(): void {
-    // Беремо дані з сервісу
-    this.products = this.dataService.getItems();
+    // 3. ПІДПИСКА (Subscribe)
+    // Ми слухаємо потік. Як тільки сервіс скаже "next", ми отримаємо дані.
+    this.subscription = this.dataService.getItems().subscribe(data => {
+      this.products = data;
+    });
   }
 
-  // Геттер залишається без змін, він працює вже з завантаженими даними
-  get filteredProducts() {
-    return this.products.filter(product => 
-      product.title.toLowerCase().includes(this.searchText.toLowerCase())
-    );
+  // 4. Метод пошуку (тепер він просто смикає сервіс)
+  onSearch(): void {
+    this.dataService.filterItems(this.searchText);
   }
 
   handleCardClick(product: Product) {
     console.log('Обрано:', product.title);
+  }
+
+  // 5. ВІДПИСКА (Unsubscribe) - обов'язково для запобігання витоку пам'яті
+  ngOnDestroy(): void {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }
