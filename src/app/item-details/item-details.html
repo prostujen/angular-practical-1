@@ -1,0 +1,18 @@
+<div class="details-container" style="padding: 20px;" *ngIf="product; else notFound">
+  <a routerLink="/items" style="display:inline-block; margin-bottom: 20px;">← Назад до списку</a>
+
+  <div style="border: 1px solid #ccc; padding: 20px; border-radius: 10px; max-width: 600px;">
+    <h1>{{ product.title }}</h1>
+    <img *ngIf="product.image" [src]="product.image" alt="{{ product.title }}" style="width: 200px;">
+    <p style="font-size: 1.2em;">{{ product.description }}</p>
+    <h3 style="color: green;">Ціна: {{ product.price }} грн</h3>
+    <button style="background: navy; color: white; padding: 10px 20px; border: none; cursor: pointer;">Купити</button>
+  </div>
+</div>
+
+<ng-template #notFound>
+  <div style="padding: 20px;">
+    <h2>Товар не знайдено 😢</h2>
+    <a routerLink="/items">Повернутися на головну</a>
+  </div>
+</ng-template>
