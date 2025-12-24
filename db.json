@@ -1,8 +1,53 @@
 {
   "products": [
-    { "id": 1, "title": "iPhone 15", "description": "Apple phone", "image": "", "price": 999 },
-    { "id": 2, "title": "Samsung S24", "description": "Android phone", "image": "", "price": 899 },
-    { "id": 3, "title": "Nokia 3310", "description": "Classic", "image": "", "price": 50 },
-    { "id": 4, "title": "Xiaomi 14", "description": "Flagship killer", "image": "", "price": 600 }
+    {
+      "id": "1",
+      "title": "iPhone 15",
+      "description": "Apple phone",
+      "image": "",
+      "price": 999
+    },
+    {
+      "id": "2",
+      "title": "Samsung S24",
+      "description": "Android phone",
+      "image": "",
+      "price": 899
+    },
+    {
+      "id": "3",
+      "title": "Nokia 3310",
+      "description": "Classic",
+      "image": "",
+      "price": 50
+    },
+    {
+      "id": "4",
+      "title": "Xiaomi 14",
+      "description": "Flagship killer",
+      "image": "",
+      "price": 600
+    },
+    {
+      "id": "2737",
+      "title": "Iphone 14 pro max",
+      "price": 676767,
+      "description": "best phone ever",
+      "image": ""
+    },
+    {
+      "id": "5279",
+      "title": "iphone 15 pro",
+      "price": 55555,
+      "description": "iphone 15 pro also good but 14 pro max is better",
+      "image": ""
+    },
+    {
+      "id": "3dd8",
+      "title": "iphone 17",
+      "price": 333333,
+      "description": "iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17iphone 17",
+      "image": ""
+    }
   ]
 }

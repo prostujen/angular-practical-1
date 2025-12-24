@@ -1,4 +1,4 @@
-<div class="card" [ngClass]="{'expensive': product.price > 200}">
+<div class="card" [ngClass]="{'expensive': product.price > 200}" appHighlight (click)="onCardClick()">
     
     <div class="image-container" *ngIf="product.image">
         <img [src]="product.image" [alt]="product.title">
@@ -6,9 +6,9 @@
 
     <h3>{{ product.title }}</h3>
     
-    <p>{{ product.description | slice:0:60 }}...</p>
+    <p>{{ product.description | shorten:50 }}</p>
 
-    <a [routerLink]="['/items', product.id]" class="details-btn">
+    <a [routerLink]="['/items', product.id]" class="details-btn" (click)="$event.stopPropagation()">
         Детальніше
     </a>
 
