@@ -1,12 +1,13 @@
 <div class="container" style="padding: 20px;">
-  <h2>Список товарів</h2>
+  <h2>Каталог товарів</h2>
 
-  <div class="grid" style="display: flex; gap: 20px; flex-wrap: wrap;">
-    <div *ngFor="let item of products">
+  <div class="list" style="display: flex; gap: 20px; flex-wrap: wrap;">
+    
+    <div *ngFor="let product of products">
       
-      <app-item-card></app-item-card> 
-      
-      <p>{{ item.title }}</p> 
+      <app-item-card [item]="product"></app-item-card>
+
     </div>
+
   </div>
 </div>

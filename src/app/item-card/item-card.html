@@ -1,3 +1,14 @@
-<div style="border: 1px solid #ccc; padding: 10px; border-radius: 8px;">
-  <h3>Картка товару</h3>
+<div class="card" [ngClass]="{'expensive': item.price > 200}">
+  <img *ngIf="item.image" [src]="item.image" alt="{{ item.title }}" style="width: 100px;">
+
+  <h3>{{ item.title }}</h3>
+  <p>{{ item.description }}</p>
+  
+  <p [style.color]="item.price > 200 ? 'red' : 'green'">
+    Ціна: {{ item.price }} грн
+  </p>
+
+  <div *ngIf="item.price > 200" style="background: yellow; display: inline-block; padding: 2px 5px;">
+    🔥 ХІТ ПРОДАЖУ
+  </div>
 </div>
