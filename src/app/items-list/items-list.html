@@ -1,7 +1,8 @@
-<div class="container" style="padding: 20px;">
+<div class="container">
+  
   <h2>Каталог товарів</h2>
 
-  <div class="header-actions" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <div class="header-actions" style="display: flex; gap: 15px; align-items: center; margin-bottom: 20px; justify-content: space-between;">
     
     <input 
       type="text" 
@@ -11,26 +12,30 @@
       style="padding: 10px; width: 300px; border-radius: 20px; border: 1px solid #ccc;"
     >
 
-    <a routerLink="/add-item" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-weight: bold; cursor: pointer;">
-      + Додати товар
-    </a>
+    <div class="buttons" style="display: flex; gap: 10px;">
+      
+      <a *ngIf="isLoggedIn" routerLink="/add-item" style="background: #28a745; color: white; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-weight: bold; cursor: pointer;">
+        + Додати
+      </a>
+
+      <button *ngIf="isLoggedIn" (click)="logout()" style="background: #dc3545; color: white; border: none; padding: 10px 20px; border-radius: 25px; cursor: pointer;">
+        Вийти
+      </button>
+
+      <a *ngIf="!isLoggedIn" routerLink="/login" style="background: #3f51b5; color: white; padding: 10px 20px; text-decoration: none; border-radius: 25px; font-weight: bold; cursor: pointer;">
+        Увійти
+      </a>
+
+    </div>
     
   </div>
 
   <div class="list" style="display: flex; gap: 20px; flex-wrap: wrap;">
-    
-    <ng-container *ngIf="products$ | async as products">
-      
-      <div *ngFor="let product of products">
-        <app-item-card 
-          [item]="product" 
-          (addToCart)="handleCardClick($event)">
-        </app-item-card>
-      </div>
-
-      <p *ngIf="products.length === 0">Товарів не знайдено :(</p>
-      
-    </ng-container>
-
+    <app-item-card 
+      *ngFor="let product of products$ | async" 
+      [product]="product"
+      (cardClick)="handleCardClick($event)"
+    ></app-item-card>
   </div>
+
 </div>

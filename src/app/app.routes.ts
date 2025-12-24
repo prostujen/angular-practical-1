@@ -1,11 +1,13 @@
 import { Routes } from '@angular/router';
 import { ItemsListComponent } from './items-list/items-list';
 import { ItemDetailsComponent } from './item-details/item-details';
-import { ItemFormComponent } from './item-form/item-form'; // <--- Імпорт
+import { ItemFormComponent } from './item-form/item-form'; 
+import { LoginComponent } from './login/login';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'items', pathMatch: 'full' },
   { path: 'items', component: ItemsListComponent },
+  { path: 'login', component: LoginComponent },
   { path: 'add-item', component: ItemFormComponent }, // <--- Нова сторінка
   { path: 'items/:id', component: ItemDetailsComponent }
 ];

@@ -1,21 +1,23 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router'; // <--- ВАЖЛИВО!
+import { RouterModule } from '@angular/router';
 import { Product } from '../shared/models/product.model';
-import { ShortenPipe } from '../shared/pipes/shorten-pipe';
-import { HighlightDirective } from '../shared/directives/highlight';
+
 @Component({
   selector: 'app-item-card',
   standalone: true,
-  imports: [CommonModule, RouterModule, ShortenPipe, HighlightDirective], // <--- Додали сюди
+  imports: [CommonModule, RouterModule],
   templateUrl: './item-card.html',
-  styleUrl: './item-card.scss'
+  styleUrls: ['./item-card.scss']
 })
 export class ItemCardComponent {
-  @Input() item!: Product;
-  @Output() addToCart = new EventEmitter<Product>();
+  // Обов'язково має бути @Input, щоб прийняти дані
+  @Input() product!: Product;
+  
+  // Обов'язково має бути @Output, щоб клікнути по картці
+  @Output() cardClick = new EventEmitter<Product>();
 
-  onBtnClick() {
-    this.addToCart.emit(this.item);
+  onCardClick() {
+    this.cardClick.emit(this.product);
   }
 }

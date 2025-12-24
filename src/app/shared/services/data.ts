@@ -4,9 +4,9 @@ import { Product } from '../models/product.model';
 import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root' 
 })
-export class DataService {
+export class DataService { 
   
   private apiUrl = '/products'; 
 
