@@ -1,51 +1,35 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Product } from '../models/product.model';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DataService {
+  
+  private apiUrl = '/products'; 
 
-  private allProducts: Product[] = [
-    { id: 1, title: 'iPhone 15', description: 'Apple phone', image: '', price: 999 },
-    { id: 2, title: 'Samsung S24', description: 'Android phone', image: '', price: 899 },
-    { id: 3, title: 'Nokia 3310', description: 'Classic', image: '', price: 50 },
-    { id: 4, title: 'Xiaomi 14', description: 'Flagship killer', image: '', price: 600 }
-  ];
-
-  private productsSubject = new BehaviorSubject<Product[]>(this.allProducts);
-
-  constructor() { }
+  constructor(private http: HttpClient) { }
 
   getItems(): Observable<Product[]> {
-    return this.productsSubject.asObservable();
-  }
-
-  filterItems(query: string): void {
-    const filtered = this.allProducts.filter(p => 
-      p.title.toLowerCase().includes(query.toLowerCase())
+    return this.http.get<Product[]>(this.apiUrl).pipe(
+      catchError(error => {
+        console.error('Error:', error);
+        return throwError(() => new Error('Error loading products'));
+      })
     );
-    this.productsSubject.next(filtered);
   }
 
-  getById(id: number): Product | undefined {
-    return this.allProducts.find(p => p.id === id);
-  } 
-
-  // Метод додавання
-  addItem(newProduct: Product): void {
-    // 1. Генеруємо ID
-    const maxId = this.allProducts.length > 0 
-      ? Math.max(...this.allProducts.map(p => p.id)) 
-      : 0;
-    newProduct.id = maxId + 1;
-
-    // 2. Додаємо в масив
-    this.allProducts.push(newProduct);
-    
-    // 3. Оновлюємо список для всіх
-    this.productsSubject.next(this.allProducts);
+  filterItems(query: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`${this.apiUrl}?q=${query}`);
   }
 
+  getById(id: number): Observable<Product> {
+    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  }
+
+  addItem(newProduct: Product): Observable<Product> {
+    return this.http.post<Product>(this.apiUrl, newProduct);
+  }
 }

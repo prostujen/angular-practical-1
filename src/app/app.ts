@@ -9,6 +9,6 @@ import { LayoutComponent } from './layout/layout';
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
-export class App { // <--- Ось цей клас шукає система!
+export class App { 
   title = 'my-app';
 }

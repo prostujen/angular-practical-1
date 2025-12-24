@@ -1,14 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms'; // 1. Імпорт інструментів форм
-import { Router, RouterModule } from '@angular/router'; // 2. Імпорт для навігації
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { DataService } from '../shared/services/data';
 
 @Component({
   selector: 'app-item-form',
   standalone: true,
-  // В масив imports додаємо модулі, які використовує цей компонент
-  imports: [CommonModule, ReactiveFormsModule, RouterModule], 
+  imports: [CommonModule, ReactiveFormsModule, RouterModule],
   templateUrl: './item-form.html',
   styleUrl: './item-form.scss'
 })
@@ -20,7 +19,7 @@ export class ItemFormComponent {
     private dataService: DataService,
     private router: Router
   ) {
-    // Налаштовуємо форму і валідацію
+    // Ініціалізація форми з валідаторами
     this.productForm = new FormGroup({
       title: new FormControl('', [Validators.required, Validators.minLength(3)]),
       price: new FormControl(0, [Validators.required, Validators.min(1)]),
@@ -31,10 +30,23 @@ export class ItemFormComponent {
 
   onSubmit() {
     if (this.productForm.valid) {
-      this.dataService.addItem(this.productForm.value);
-      this.router.navigate(['/items']); // Повертаємось на список
+      // ВАЖЛИВО: Оскільки це HTTP-запит, треба використати .subscribe()
+      // Запит відправиться тільки тоді, коли ми підпишемось
+      this.dataService.addItem(this.productForm.value).subscribe({
+        next: () => {
+          // Цей код виконається, коли сервер скаже "ОК"
+          console.log('Товар успішно додано!');
+          this.router.navigate(['/items']);
+        },
+        error: (err) => {
+          // Обробка помилки (якщо сервер не працює)
+          console.error('Помилка при додаванні:', err);
+          alert('Не вдалося зберегти товар. Перевірте, чи запущено json-server.');
+        }
+      });
     } else {
-      this.productForm.markAllAsTouched(); // Підсвічуємо помилки
+      // Якщо форма не валідна, підсвічуємо поля червоним
+      this.productForm.markAllAsTouched();
     }
   }
 }

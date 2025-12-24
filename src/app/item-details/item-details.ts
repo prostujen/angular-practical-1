@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterModule } from '@angular/router'; // <--- 1. Для роботи з URL
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core'; 
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Product } from '../shared/models/product.model';
 import { DataService } from '../shared/services/data';
@@ -7,26 +7,41 @@ import { DataService } from '../shared/services/data';
 @Component({
   selector: 'app-item-details',
   standalone: true,
-  imports: [CommonModule, RouterModule], // <--- Додали RouterModule (для кнопки "Назад")
+  imports: [CommonModule, RouterModule],
   templateUrl: './item-details.html',
   styleUrl: './item-details.scss'
 })
 export class ItemDetailsComponent implements OnInit {
   
   product: Product | undefined;
+  isLoading: boolean = true;
 
   constructor(
-    private route: ActivatedRoute, // Дозволяє читати URL
-    private dataService: DataService // Дозволяє брати дані
+    private route: ActivatedRoute,
+    private dataService: DataService,
+    private cdr: ChangeDetectorRef 
   ) {}
 
   ngOnInit(): void {
-    // Отримуємо 'id' з параметрів маршруту
     const id = Number(this.route.snapshot.paramMap.get('id'));
     
-    // Шукаємо товар через сервіс
     if (id) {
-      this.product = this.dataService.getById(id);
+      this.dataService.getById(id).subscribe({
+        next: (data) => {
+          console.log('Дані отримано!', data);
+          this.product = data;
+          this.isLoading = false;
+          
+          this.cdr.detectChanges(); 
+        },
+        error: (err) => {
+          console.error('Помилка:', err);
+          this.isLoading = false;
+          this.cdr.detectChanges(); 
+        }
+      });
+    } else {
+      this.isLoading = false;
     }
   }
 }

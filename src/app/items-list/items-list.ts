@@ -11,13 +11,12 @@ import { Observable } from 'rxjs';
 @Component({
   selector: 'app-items-list',
   standalone: true,
-  // 2. ПЕРЕВІРТЕ, ЧИ Є RouterModule У ЦЬОМУ СПИСКУ:
+
   imports: [CommonModule, ItemCardComponent, FormsModule, RouterModule], 
   templateUrl: './items-list.html',
   styleUrls: ['./items-list.scss']
 })
 export class ItemsListComponent implements OnInit {
-  
   products$!: Observable<Product[]>; 
   searchText: string = '';
 
@@ -28,7 +27,8 @@ export class ItemsListComponent implements OnInit {
   }
 
   onSearch(): void {
-    this.dataService.filterItems(this.searchText);
+    // Просто присвоюємо Observable, AsyncPipe в HTML зробить решту
+    this.products$ = this.dataService.filterItems(this.searchText);
   }
 
   handleCardClick(product: Product) {
