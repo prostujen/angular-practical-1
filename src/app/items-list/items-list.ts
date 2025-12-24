@@ -1,36 +1,39 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core'; // <--- 1. Додали OnInit
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // <--- 1. ВАЖЛИВО: Імпорт для ngModel
-import { ItemCardComponent } from '../item-card/item-card'; // або '../item-card/item-card.ts'
+import { FormsModule } from '@angular/forms';
+import { ItemCardComponent } from '../item-card/item-card';
 import { Product } from '../shared/models/product.model';
+import { DataService } from '../shared/services/data'; // <--- 2. Імпортували наш сервіс
 
 @Component({
   selector: 'app-items-list',
   standalone: true,
-  imports: [CommonModule, ItemCardComponent, FormsModule], // <--- 2. Додали FormsModule сюди
+  imports: [CommonModule, ItemCardComponent, FormsModule],
   templateUrl: './items-list.html',
   styleUrls: ['./items-list.scss']
 })
-export class ItemsListComponent {
-  // Змінна для поля пошуку
+// 3. Додали implements OnInit
+export class ItemsListComponent implements OnInit {
+  
   searchText: string = '';
+  products: Product[] = []; 
 
-  products: Product[] = [
-    { id: 1, title: 'iPhone 15', description: 'Apple phone', image: '', price: 999 },
-    { id: 2, title: 'Samsung S24', description: 'Android phone', image: '', price: 899 },
-    { id: 3, title: 'Nokia 3310', description: 'Classic', image: '', price: 50 }
-  ];
+  constructor(private dataService: DataService) {}
 
-  // 3. Геттер для фільтрації (автоматично оновлює список при зміні searchText)
+  // 5. Цей метод запускається автоматично при старті компонента
+  ngOnInit(): void {
+    // Беремо дані з сервісу
+    this.products = this.dataService.getItems();
+  }
+
+  // Геттер залишається без змін, він працює вже з завантаженими даними
   get filteredProducts() {
     return this.products.filter(product => 
       product.title.toLowerCase().includes(this.searchText.toLowerCase())
     );
   }
 
-  // 4. Метод, який приймає подію від картки
   handleCardClick(product: Product) {
-    console.log('Користувач обрав товар:', product.title);
-    alert(`Ви обрали: ${product.title}`); // Для наочності
+    console.log('Обрано:', product.title);
   }
 }
