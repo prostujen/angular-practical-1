@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'; // <--- 1. Додали OnDestroy
-import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Тут живе AsyncPipe
 import { FormsModule } from '@angular/forms';
 import { ItemCardComponent } from '../item-card/item-card';
 import { Product } from '../shared/models/product.model';
-import { DataService } from '../shared/services/data'; // Перевірте шлях імпорту
-import { Subscription } from 'rxjs'; // <--- 2. Імпорт для типу підписки
+import { DataService } from '../shared/services/data';
+import { Observable } from 'rxjs'; // Нам треба тільки Observable
 
 @Component({
   selector: 'app-items-list',
@@ -13,37 +13,24 @@ import { Subscription } from 'rxjs'; // <--- 2. Імпорт для типу п�
   templateUrl: './items-list.html',
   styleUrls: ['./items-list.scss']
 })
-export class ItemsListComponent implements OnInit, OnDestroy {
+export class ItemsListComponent implements OnInit {
   
-  products: Product[] = [];
+  // Замість масиву products, у нас тепер потік products$ (долар в кінці - це домовленість для Observable)
+  products$!: Observable<Product[]>; 
   searchText: string = '';
-  
-  // Змінна для зберігання підписки, щоб потім відписатися
-  private subscription!: Subscription;
 
   constructor(private dataService: DataService) {}
 
   ngOnInit(): void {
-    // 3. ПІДПИСКА (Subscribe)
-    // Ми слухаємо потік. Як тільки сервіс скаже "next", ми отримаємо дані.
-    this.subscription = this.dataService.getItems().subscribe(data => {
-      this.products = data;
-    });
+    // Ми просто присвоюємо потік, не підписуючись (subscribe не пишемо!)
+    this.products$ = this.dataService.getItems();
   }
 
-  // 4. Метод пошуку (тепер він просто смикає сервіс)
   onSearch(): void {
     this.dataService.filterItems(this.searchText);
   }
 
   handleCardClick(product: Product) {
     console.log('Обрано:', product.title);
-  }
-
-  // 5. ВІДПИСКА (Unsubscribe) - обов'язково для запобігання витоку пам'яті
-  ngOnDestroy(): void {
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-    }
   }
 }

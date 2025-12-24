@@ -1,18 +1,77 @@
 .card {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 15px;
-  width: 200px;
+  width: 260px;
   background: white;
-  transition: transform 0.2s;
+  border-radius: 12px; // М'які кути
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05); // Легка тінь
+  transition: all 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 
-  &:hover {
-    transform: scale(1.05);
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  // Стиль для класу 'expensive' (червона рамка зникне, стане просто елегантнішим)
+  &.expensive {
+    border: 2px solid #ff9800;
   }
 
-  // Цей клас додасться динамічно, якщо ціна > 200
-  &.expensive {
-    border: 2px solid orange;
+  img {
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 15px;
+  }
+
+  h3 {
+    font-size: 1.2rem;
+    margin: 10px 0;
+    color: #2c3e50;
+  }
+
+  p {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+
+  // Стиль для посилання "Детальніше" (робимо схожим на кнопку)
+  a {
+    margin-top: auto; // Притискаємо кнопку до низу
+    display: inline-block;
+    padding: 10px 24px;
+    background-color: #3f51b5;
+    color: white !important; // Примусовий білий колір
+    text-decoration: none !important;
+    border-radius: 25px;
+    font-weight: 500;
+    transition: background 0.2s;
+    border: none !important;
+
+    &:hover {
+      background-color: #303f9f;
+    }
+  }
+
+  // Ціна
+  p[style*="color"] {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 10px 0;
+  }
+
+  // Плашка ХІТ
+  div[style*="background: yellow"] {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4757 !important; // Червоний замість жовтого
+    color: white;
+    font-size: 0.7rem;
+    padding: 4px 8px !important;
+    border-radius: 4px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
   }
 }

@@ -1,0 +1,37 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+  h2 {
+    color: #333;
+    margin-bottom: 20px;
+    font-size: 2rem;
+  }
+
+  // Стиль для поля пошуку
+  input {
+    width: 100%;
+    max-width: 400px;
+    padding: 12px 20px;
+    margin-bottom: 30px;
+    border: 2px solid #e0e0e0;
+    border-radius: 25px; // Закруглені краї
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.3s;
+
+    &:focus {
+      border-color: #3f51b5; // Синій колір при фокусі
+    }
+  }
+
+  // Сітка для карток
+  .list {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+    justify-content: flex-start; // Вирівнювання зліва
+  }
+}

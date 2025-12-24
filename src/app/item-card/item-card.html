@@ -1,10 +1,13 @@
-<div class="card" [ngClass]="{'expensive': item.price > 200}">
+<div class="card" [ngClass]="{'expensive': item.price > 200}" appHighlight>
+  
   <img *ngIf="item.image" [src]="item.image" alt="{{ item.title }}" style="width: 100px;">
-  
+
   <h3>{{ item.title }}</h3>
+
+  <p>{{ item.description | shorten: 20 }}</p>
   
-    <a [routerLink]="['/items', item.id]" 
-     style="display:inline-block; margin-top: 10px; padding: 5px 10px; background: #eee; text-decoration: none; color: black; border: 1px solid #ccc;">
+  <a [routerLink]="['/items', item.id]" 
+     style="display:inline-block; margin-top: 10px; padding: 5px 10px; background: #eee; text-decoration: none; color: black; border: 1px solid #ccc; cursor: pointer; border-radius: 4px;">
     Детальніше
   </a>
 
@@ -12,7 +15,8 @@
     Ціна: {{ item.price }} грн
   </p>
 
-  <div *ngIf="item.price > 200" style="background: yellow; display: inline-block;">
-    🔥 ХІТ
+  <div *ngIf="item.price > 200" style="background: yellow; display: inline-block; padding: 2px 5px; font-weight: bold;">
+    🔥 ХІТ ПРОДАЖУ
   </div>
+
 </div>

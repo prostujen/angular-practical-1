@@ -11,14 +11,18 @@
 
   <div class="list" style="display: flex; gap: 20px; flex-wrap: wrap;">
     
-    <div *ngFor="let product of products">
-      <app-item-card 
-        [item]="product" 
-        (addToCart)="handleCardClick($event)">
-      </app-item-card>
-    </div>
+    <ng-container *ngIf="products$ | async as products">
+      
+      <div *ngFor="let product of products">
+        <app-item-card 
+          [item]="product" 
+          (addToCart)="handleCardClick($event)">
+        </app-item-card>
+      </div>
 
-    <p *ngIf="products.length === 0">Товарів не знайдено :(</p>
+      <p *ngIf="products.length === 0">Товарів не знайдено :(</p>
+      
+    </ng-container>
 
   </div>
 </div>
