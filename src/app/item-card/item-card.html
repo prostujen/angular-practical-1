@@ -1,14 +1,17 @@
 <div class="card" [ngClass]="{'expensive': item.price > 200}">
   <img *ngIf="item.image" [src]="item.image" alt="{{ item.title }}" style="width: 100px;">
-
-  <h3>{{ item.title }}</h3>
-  <p>{{ item.description }}</p>
   
+  <h3>{{ item.title }}</h3>
+  
+  <button (click)="onBtnClick()" style="margin-top: 10px; cursor: pointer;">
+    Детальніше
+  </button>
+
   <p [style.color]="item.price > 200 ? 'red' : 'green'">
     Ціна: {{ item.price }} грн
   </p>
 
-  <div *ngIf="item.price > 200" style="background: yellow; display: inline-block; padding: 2px 5px;">
-    🔥 ХІТ ПРОДАЖУ
+  <div *ngIf="item.price > 200" style="background: yellow; display: inline-block;">
+    🔥 ХІТ
   </div>
 </div>

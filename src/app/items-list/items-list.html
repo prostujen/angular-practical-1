@@ -1,13 +1,25 @@
 <div class="container" style="padding: 20px;">
   <h2>Каталог товарів</h2>
 
+  <input 
+    type="text" 
+    placeholder="Пошук товарів..." 
+    [(ngModel)]="searchText"
+    style="margin-bottom: 20px; padding: 5px; width: 300px;"
+  >
+
   <div class="list" style="display: flex; gap: 20px; flex-wrap: wrap;">
     
-    <div *ngFor="let product of products">
+    <div *ngFor="let product of filteredProducts">
       
-      <app-item-card [item]="product"></app-item-card>
+      <app-item-card 
+        [item]="product" 
+        (addToCart)="handleCardClick($event)">
+      </app-item-card>
 
     </div>
+
+    <p *ngIf="filteredProducts.length === 0">Товарів не знайдено :(</p>
 
   </div>
 </div>
